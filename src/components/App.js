@@ -140,10 +140,71 @@ const states = [{
 
 function App() 
 {
+	const [selectedState, setSelectedState] = useState(0);
+	const [selectedCity, setSelectedCity] = useState(0);
+	const [selectedLandmark, setSelectedLandmark] = useState(0);
 	// Do not alter/remove main div
+	console.log(selectedState)
+	const handleStateChange = (e) => {
+		setSelectedState(e.target.value);
+		setSelectedCity(0); // Reset city selection when state changes
+		setSelectedLandmark(0); // Reset landmark selection when state changes
+	}
+	const handleCityChange = (e) => {
+		setSelectedCity(e.target.value);
+		setSelectedLandmark(0); // Reset landmark selection when city changes
+	}
 	return (
 	<div id="main">
-		
+		<div>
+			<select id="state" onChange={(e) => handleStateChange(e)}>
+				{
+					states.map((state, index) => (
+						<option key={index} value={index}  >
+							{state.name}
+						</option>
+					))
+				}
+			</select>
+			<select id="city" onChange={(e) => handleCityChange(e)}>
+				{
+					states[selectedState].city.map((city, index) => (
+						<option key={index} value={index}  onClick={() => setSelectedCity(index)}>
+							{city.name}
+						</option>
+					))
+				}
+			</select>
+			<select id="landmark" onChange={(e) => setSelectedLandmark(e.target.value)}>
+				{
+					states[selectedState].city[selectedCity].landmarks.map((landmark, index) => (
+						<option key={index} value={index}  onClick={() => setSelectedLandmark(index)}>
+							{landmark.name}
+						</option>
+					))
+				}
+			</select>
+		</div>
+		<div>
+			<div id="state-name">
+				<h3>{states[selectedState].name}</h3>
+			</div>
+			<div id="state-description">
+				<p>{states[selectedState].description}</p>
+			</div>
+			<div id="city-name">
+				<h3>{states[selectedState].city[selectedCity].name}</h3>
+			</div>
+			<div id="city-description">
+				<p>{states[selectedState].city[selectedCity].description}</p>
+			</div>
+			<div id="landmark-name">
+				<h3>{states[selectedState].city[selectedCity].landmarks[selectedLandmark].name}</h3>
+			</div>
+			<div id="landmark-description">
+				<p>{states[selectedState].city[selectedCity].landmarks[selectedLandmark].description}</p>
+			</div>
+		</div>
 	</div>
 	);
 }
