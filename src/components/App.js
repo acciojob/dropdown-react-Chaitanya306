@@ -187,7 +187,7 @@ function App()
 		</div>
 		<div>
 			<div id="state-name">
-				<h3>{states[selectedState].name}</h3>
+				<h3 id='state-title'>{states[selectedState].name}</h3>
 			</div>
 			<div id="state-description">
 				<p>{states[selectedState].description}</p>
